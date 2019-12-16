@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+:root {
+    /* Common styles */
+    --color-white: #FFFFFF;
+    --color-black: #000000;
+    --color-black-7: rgba(0, 0, 0, 0.7);
+    --color-aqua: #6ED7D3;
+    --color-blue: #2368A2;
+
+    /* Background colors */
+    --color-bg-main: #F2F2F2;
+    --color-bg-primary: #FFFFFF;
+    
+    /* Typography colors */
+    --color-text-main: #212A34;
+    --color-border-main: #B8C4CE;
+}
+
+body * {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0px;
+}
+
+h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 32px;
+    color: var(--color-text-main);
+}
+
+h5 {
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 27px;
+    color: var(--color-text-main);
+}
+
+p {
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: var(--color-text-main);
+}
+
+.p-xsmall {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 12px;
+    color: var(--color-text-main);
+}
+
+.p-small {
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    color: var(--color-text-main);
+}
+
+.p-medium {
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 27px;
+    color: var(--color-text-main);
+}
+
+.p-large {
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 32px;
+    color: var(--color-text-main);
+}
