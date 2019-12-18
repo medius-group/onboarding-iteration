@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { Badge } from 'antd';
+import editImg from 'assets/img/edit.svg';
 
 const NavbarWrapper = styled.div`
   padding: 21px 38px 0px 0px;
@@ -29,6 +30,39 @@ const NavbarWrapper = styled.div`
           font-weight: normal;
         }
       }
+    }
+  }
+
+  .change-setup {
+    display: flex;
+    align-items: center;
+    margin-top: 39px;
+
+    img {
+      margin-right: 29px;
+    }
+
+    a {
+      font-style: italic;
+      color: var(--color-blue);
+    }
+  }
+
+  .additional-links {
+    margin-top: 75px;
+    display: flex;
+    flex-direction: column;
+
+    a {
+      font-weight: normal;
+      color: var(--color-blue);
+      line-height: 18px;
+    }
+
+    .add-link {
+      font-weight: normal;
+      opacity: 0.71;
+      cursor: pointer;
     }
   }
 `;
@@ -69,6 +103,24 @@ function Navbar() {
           </NavLink>
         );
       })}
+      <div className="change-setup">
+        <img src={editImg} alt="edit icon" />
+        <a className="p-small" href="/#">
+          Change setup
+        </a>
+      </div>
+      <div className="additional-links">
+        <a className="p-small" href="/#">
+          A link to a document
+        </a>
+        <a className="p-small" href="/#">
+          Another link
+        </a>
+        <a className="p-small" href="/#">
+          And a third
+        </a>
+        <p className="p-small add-link">+ Add link</p>
+      </div>
     </NavbarWrapper>
   );
 }

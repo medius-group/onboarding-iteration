@@ -39,13 +39,13 @@ const MainLayoutWrapper = styled.div`
   }
 `;
 
-function MainLayout({ children }) {
+function MainLayout({ children, isShowNavbar }) {
   return (
     <MainLayoutWrapper>
       <div id="content-outer">
         <Header title="Onboarding - ACME Inc" />
         <div className="main-wrapper">
-          <Navbar />
+          {isShowNavbar && <Navbar />}
           <div id="content-inner">{children}</div>
         </div>
       </div>
@@ -57,11 +57,13 @@ MainLayout.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
-  ])
+  ]),
+  isShowNavbar: PropTypes.bool
 };
 
 MainLayout.defaultProps = {
-  children: null
+  children: null,
+  isShowNavbar: false
 };
 
 export default withTheme(MainLayout);
