@@ -2,17 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { withTheme } from 'styled-components';
 import Header from 'containers/Layout/Header';
+import Navbar from 'containers/Layout/Navbar';
 
 const MainLayoutWrapper = styled.div`
   #content-outer {
     height: 100%;
     background-color: var(--color-bg-main);
 
-    #content-inner {
-      max-width: 1006px;
+    .main-wrapper {
+      display: flex;
       margin: auto;
-      padding: 37px 137px 40px 137px;
-      background-color: var(--color-bg-primary);
+      justify-content: center;
+
+      #content-inner {
+        max-width: 1006px;
+        padding: 37px 137px 40px 137px;
+        background-color: var(--color-bg-primary);
+      }
     }
   }
 
@@ -38,7 +44,10 @@ function MainLayout({ children }) {
     <MainLayoutWrapper>
       <div id="content-outer">
         <Header title="Onboarding - ACME Inc" />
-        <div id="content-inner">{children}</div>
+        <div className="main-wrapper">
+          <Navbar />
+          <div id="content-inner">{children}</div>
+        </div>
       </div>
     </MainLayoutWrapper>
   );

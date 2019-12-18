@@ -410,7 +410,7 @@ function Welcome({ form }) {
               )}
             </Form.Item>
             <div className="btn-wrapper">
-              <Button>Next</Button>
+              <Button>Go</Button>
             </div>
           </Form>
         </StepWrapper>
