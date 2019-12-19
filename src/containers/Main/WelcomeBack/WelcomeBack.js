@@ -39,6 +39,36 @@ const WelcomeBackWrapper = styled.div`
       padding-right: 31px;
     }
   }
+
+  .help-links-wrapper {
+    margin-top: 55px;
+    h6 {
+      text-align: left;
+      margin-bottom: 10px;
+    }
+
+    ul {
+      list-style: none;
+      margin-top: 10px;
+
+      li {
+        display: flex;
+        align-items: center;
+        color: var(--color-blue);
+        cursor: pointer;
+      }
+
+      li::before {
+        content: ' ';
+        background: rgba(0, 0, 0, 0.87);
+        display: inline-block;
+        width: 3px;
+        height: 3px;
+        margin-left: -35px;
+        margin-right: 10px;
+      }
+    }
+  }
 `;
 
 const navItems = [
@@ -100,6 +130,14 @@ function WelcomeBack() {
             nextStepLink={item.nextStepLink || ''}
           />
         ))}
+      </div>
+      <div className="help-links-wrapper">
+        <h6>Help links</h6>
+        <p>Some text and some links to good sources of information,. </p>
+        <ul>
+          <li>Link to a collection of resourdes</li>
+          <li>Link to success portal</li>
+        </ul>
       </div>
     </WelcomeBackWrapper>
   );
