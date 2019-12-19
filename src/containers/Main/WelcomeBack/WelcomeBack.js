@@ -75,6 +75,11 @@ const WelcomeBackWrapper = styled.div`
   }
 
   @media (max-width: 1023px) {
+    .welcome-back-info {
+      img {
+        width: 50%;
+      }
+    }
     .onboarding-status-wrapper {
       justify-content: space-between;
 

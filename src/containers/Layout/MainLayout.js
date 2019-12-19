@@ -6,6 +6,7 @@ import Navbar from 'containers/Layout/Navbar';
 
 const MainLayoutWrapper = styled.div`
   #content-outer {
+    position: relative;
     min-height: 100vh;
     background-color: var(--color-bg-main);
 
@@ -13,7 +14,7 @@ const MainLayoutWrapper = styled.div`
       display: flex;
       margin: auto;
       justify-content: center;
-      padding: 0 10px;
+      padding: 0 20px;
 
       #content-inner {
         max-width: 1006px;
@@ -22,7 +23,7 @@ const MainLayoutWrapper = styled.div`
     }
   }
 
-  @media (max-width: 1023px) {
+  @media (max-width: 767px) {
     #content-outer {
       .main-wrapper {
         .desktop-nav-bar {

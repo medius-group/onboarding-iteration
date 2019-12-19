@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Icon, Input } from 'antd';
+import Navbar from 'containers/Layout/Navbar';
 import logoImg from 'assets/img/logo.svg';
 import avatarImg from 'assets/img/avatar.svg';
 
@@ -50,7 +51,26 @@ const HeaderWrapper = styled.div`
         margin-left: 5px;
         cursor: pointer;
       }
+
+      .menu-icon {
+        font-size: 24px;
+        display: none;
+      }
     }
+  }
+
+  .mobile-menu {
+    display: none;
+    position: absolute;
+    width: 100%;
+    background-color: var(--color-bg-main);
+    top: 80px;
+    left: 0;
+    height: 0;
+  }
+
+  @media (max-width: 1023px) {
+    margin: 0px 40px 11px 40px;
   }
 
   @media (max-width: 767px) {
@@ -63,6 +83,25 @@ const HeaderWrapper = styled.div`
         position: absolute;
         right: 20px;
         top: 80px;
+      }
+
+      .user-setting {
+        .menu-icon {
+          display: block;
+        }
+      }
+    }
+
+    .mobile-menu {
+      display: flex;
+      height: ${props => !props.isMenuCollapsed && 'calc(100vh - 80px)'};
+      transition: all 0.2s ease;
+      overflow: hidden;
+      z-index: 10;
+
+      .mobile-nav-bar {
+        width: 100%;
+        padding: 30px 30px;
       }
     }
   }
@@ -78,8 +117,13 @@ const HeaderWrapper = styled.div`
 `;
 
 function Header({ title, isVisibleSearch }) {
+  const [isMenuCollapsed, setIsMenuCollapsed] = useState(true);
+
   return (
-    <HeaderWrapper isVisibleSearch={isVisibleSearch}>
+    <HeaderWrapper
+      isVisibleSearch={isVisibleSearch}
+      isMenuCollapsed={isMenuCollapsed}
+    >
       <div className="logo-wrapper">
         <img src={logoImg} alt="logo" />
         <p>{title}</p>
@@ -89,7 +133,17 @@ function Header({ title, isVisibleSearch }) {
         <div className="user-setting">
           <img src={avatarImg} alt="logo" />
           <Icon type="caret-down" />
+          {isVisibleSearch && (
+            <Icon
+              className="menu-icon"
+              type={isMenuCollapsed ? 'menu-fold' : 'menu-unfold'}
+              onClick={() => setIsMenuCollapsed(!isMenuCollapsed)}
+            />
+          )}
         </div>
+      </div>
+      <div className="mobile-menu">
+        <Navbar className="mobile-nav-bar" />
       </div>
     </HeaderWrapper>
   );
