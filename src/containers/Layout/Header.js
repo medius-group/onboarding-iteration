@@ -10,7 +10,6 @@ const HeaderWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   margin: 0px 120px 11px 120px;
-
   padding: 16px 8px;
 
   .logo-wrapper {
@@ -27,12 +26,6 @@ const HeaderWrapper = styled.div`
     display: flex;
     align-items: center;
 
-    i {
-      color: var(--color-black-7);
-      margin-left: 5px;
-      cursor: pointer;
-    }
-
     input {
       width: 230px;
       height: 32px;
@@ -47,10 +40,31 @@ const HeaderWrapper = styled.div`
       color: var(--color-text-secondary);
       margin-right: 20px;
     }
+
+    .user-setting {
+      display: flex;
+      align-items: center;
+
+      i {
+        color: var(--color-black-7);
+        margin-left: 5px;
+        cursor: pointer;
+      }
+    }
   }
 
   @media (max-width: 767px) {
     margin: 0px 20px 11px 20px;
+    padding: ${props =>
+      props.isVisibleSearch ? '16px 8px 60px 8px' : 'padding: 16px 8px;'};
+
+    .avatar-wrapper {
+      input {
+        position: absolute;
+        right: 20px;
+        top: 80px;
+      }
+    }
   }
 
   @media (max-width: 567px) {
@@ -65,15 +79,17 @@ const HeaderWrapper = styled.div`
 
 function Header({ title, isVisibleSearch }) {
   return (
-    <HeaderWrapper>
+    <HeaderWrapper isVisibleSearch={isVisibleSearch}>
       <div className="logo-wrapper">
         <img src={logoImg} alt="logo" />
         <p>{title}</p>
       </div>
       <div className="avatar-wrapper">
         {isVisibleSearch && <Input placeholder="Search" />}
-        <img src={avatarImg} alt="logo" />
-        <Icon type="caret-down" />
+        <div className="user-setting">
+          <img src={avatarImg} alt="logo" />
+          <Icon type="caret-down" />
+        </div>
       </div>
     </HeaderWrapper>
   );

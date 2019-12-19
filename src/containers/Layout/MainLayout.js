@@ -21,6 +21,16 @@ const MainLayoutWrapper = styled.div`
       }
     }
   }
+
+  @media (max-width: 1023px) {
+    #content-outer {
+      .main-wrapper {
+        .desktop-nav-bar {
+          display: none;
+        }
+      }
+    }
+  }
 `;
 
 function MainLayout({ children, isShowNavbar, isVisibleSearch }) {
@@ -32,7 +42,7 @@ function MainLayout({ children, isShowNavbar, isVisibleSearch }) {
           isVisibleSearch={isVisibleSearch}
         />
         <div className="main-wrapper">
-          {isShowNavbar && <Navbar />}
+          {isShowNavbar && <Navbar className="desktop-nav-bar" />}
           <div id="content-inner">{children}</div>
         </div>
       </div>

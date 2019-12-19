@@ -74,9 +74,9 @@ const navItems = [
   { name: 'D', title: 'User Import', status: 0, href: 'main/user/import' }
 ];
 
-function Navbar() {
+function Navbar({ ...props }) {
   return (
-    <NavbarWrapper>
+    <NavbarWrapper {...props}>
       {navItems.map(item => {
         let badgeColor;
         if (item.status === 0) {

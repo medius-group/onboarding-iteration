@@ -160,7 +160,6 @@ const StepWrapper = styled.div`
 
       button {
         width: 128px;
-        height: 32px;
         background-color: var(--color-aqua);
         color: var(--color-white);
       }

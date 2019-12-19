@@ -69,6 +69,41 @@ const WelcomeBackWrapper = styled.div`
       }
     }
   }
+
+  @media (max-width: 1200px) {
+    padding: 82px 40px 67px 40px;
+  }
+
+  @media (max-width: 1023px) {
+    .onboarding-status-wrapper {
+      justify-content: space-between;
+
+      .onboarding-status:not(:last-child) {
+        padding-right: 0px;
+      }
+    }
+  }
+
+  @media (max-width: 767px) {
+    .header-title {
+      margin-bottom: 20px;
+    }
+
+    .welcome-back-info {
+      flex-direction: column;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  @media (max-width: 456px) {
+    .onboarding-status-wrapper {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
 `;
 
 const navItems = [
