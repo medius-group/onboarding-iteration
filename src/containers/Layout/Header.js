@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Icon } from 'antd';
+import { Icon, Input } from 'antd';
 import logoImg from 'assets/img/logo.svg';
 import avatarImg from 'assets/img/avatar.svg';
 
@@ -32,6 +32,21 @@ const HeaderWrapper = styled.div`
       margin-left: 5px;
       cursor: pointer;
     }
+
+    input {
+      width: 230px;
+      height: 32px;
+      background: var(--color-bg-input);
+      border: 1px solid var(--color-border-main);
+      box-sizing: border-box;
+      border-radius: 3px;
+      font-style: italic;
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 15px;
+      color: var(--color-text-secondary);
+      margin-right: 20px;
+    }
   }
 
   @media (max-width: 767px) {
@@ -48,7 +63,7 @@ const HeaderWrapper = styled.div`
   }
 `;
 
-function Header({ title }) {
+function Header({ title, isVisibleSearch }) {
   return (
     <HeaderWrapper>
       <div className="logo-wrapper">
@@ -56,6 +71,7 @@ function Header({ title }) {
         <p>{title}</p>
       </div>
       <div className="avatar-wrapper">
+        {isVisibleSearch && <Input placeholder="Search" />}
         <img src={avatarImg} alt="logo" />
         <Icon type="caret-down" />
       </div>
@@ -64,11 +80,13 @@ function Header({ title }) {
 }
 
 Header.propTypes = {
-  title: PropTypes.string
+  title: PropTypes.string,
+  isVisibleSearch: PropTypes.bool
 };
 
 Header.defaultProps = {
-  title: ''
+  title: '',
+  isVisibleSearch: false
 };
 
 export default Header;

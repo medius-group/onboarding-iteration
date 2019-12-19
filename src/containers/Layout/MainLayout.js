@@ -6,7 +6,7 @@ import Navbar from 'containers/Layout/Navbar';
 
 const MainLayoutWrapper = styled.div`
   #content-outer {
-    height: 100%;
+    min-height: 100vh;
     background-color: var(--color-bg-main);
 
     .main-wrapper {
@@ -39,11 +39,14 @@ const MainLayoutWrapper = styled.div`
   }
 `;
 
-function MainLayout({ children, isShowNavbar }) {
+function MainLayout({ children, isShowNavbar, isVisibleSearch }) {
   return (
     <MainLayoutWrapper>
       <div id="content-outer">
-        <Header title="Onboarding - ACME Inc" />
+        <Header
+          title="Onboarding - ACME Inc"
+          isVisibleSearch={isVisibleSearch}
+        />
         <div className="main-wrapper">
           {isShowNavbar && <Navbar />}
           <div id="content-inner">{children}</div>
@@ -58,12 +61,14 @@ MainLayout.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]),
-  isShowNavbar: PropTypes.bool
+  isShowNavbar: PropTypes.bool,
+  isVisibleSearch: PropTypes.bool
 };
 
 MainLayout.defaultProps = {
   children: null,
-  isShowNavbar: false
+  isShowNavbar: false,
+  isVisibleSearch: false
 };
 
 export default withTheme(MainLayout);

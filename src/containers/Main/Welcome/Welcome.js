@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'recompose';
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 import { Form, Checkbox } from 'antd';
 import MainLayout from 'containers/Layout/MainLayout';
 import Button from '@material-ui/core/Button';
@@ -410,7 +411,9 @@ function Welcome({ form }) {
               )}
             </Form.Item>
             <div className="btn-wrapper">
-              <Button>Go</Button>
+              <NavLink to="/main">
+                <Button>Go</Button>
+              </NavLink>
             </div>
           </Form>
         </StepWrapper>
