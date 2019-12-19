@@ -13,27 +13,11 @@ const MainLayoutWrapper = styled.div`
       display: flex;
       margin: auto;
       justify-content: center;
+      padding: 0 10px;
 
       #content-inner {
         max-width: 1006px;
-        padding: 37px 137px 40px 137px;
         background-color: var(--color-bg-primary);
-      }
-    }
-  }
-
-  @media (max-width: 1023px) {
-    #content-outer {
-      #content-inner {
-        padding: 37px 40px 40px 40px;
-      }
-    }
-  }
-
-  @media (max-width: 767px) {
-    #content-outer {
-      #content-inner {
-        padding: 37px 20px 40px 20px;
       }
     }
   }

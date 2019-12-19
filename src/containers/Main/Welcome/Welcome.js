@@ -9,6 +9,8 @@ import Button from '@material-ui/core/Button';
 import welcomeImg from 'assets/img/welcome.svg';
 
 const WelcomeWrapper = styled.div`
+  padding: 37px 137px 40px 137px;
+
   h4 {
     display: flex;
     justify-content: center;
@@ -34,7 +36,13 @@ const WelcomeWrapper = styled.div`
     }
   }
 
+  @media (max-width: 1023px) {
+    padding: 37px 40px 40px 40px;
+  }
+
   @media (max-width: 767px) {
+    padding: 37px 20px 40px 20px;
+
     .top-message-wrapper {
       flex-direction: column;
       p {
