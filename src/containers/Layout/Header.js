@@ -10,8 +10,9 @@ const HeaderWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 0px 120px 11px 120px;
-  padding: 16px 8px;
+  padding: 19px;
+  background-color: var(--color-white);
+  margin-bottom: 6.5px;
 
   .logo-wrapper {
     display: flex;
