@@ -47,6 +47,10 @@ const HeaderWrapper = styled.div`
       display: flex;
       align-items: center;
 
+      img {
+        width: 40px;
+      }
+
       i {
         color: var(--color-black-7);
         margin-left: 5px;

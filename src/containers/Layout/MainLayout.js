@@ -14,7 +14,7 @@ const MainLayoutWrapper = styled.div`
       display: flex;
       margin: auto;
       justify-content: center;
-      padding: 0 20px;
+      padding: 0 20px 47px 20px;
 
       #content-inner {
         max-width: 1006px;
