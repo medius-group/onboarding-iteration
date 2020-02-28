@@ -6,64 +6,53 @@ import { NavLink } from 'react-router-dom';
 import { Form, Checkbox } from 'antd';
 import MainLayout from 'containers/Layout/MainLayout';
 import Button from '@material-ui/core/Button';
-import welcomeImg from 'assets/img/welcome.svg';
+import ServiceInfo from 'components/Welcome/ServiceInfo';
+import leftArrowImg from 'assets/img/left_arrow.svg';
 
 const WelcomeSettingWrapper = styled.div`
-  padding: 37px 137px 40px 137px;
+  padding: 8px 10px;
 
-  h4 {
-    display: flex;
-    justify-content: center;
-
-    p {
-      color: var(--color-aqua);
-    }
-  }
-
-  .top-message-wrapper {
+  .step-wrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 58px;
-    margin-bottom: 67px;
+    margin-bottom: 4px;
+  }
 
-    p {
-      max-width: 300px;
-    }
+  .welcome-title {
+    text-align: center;
+    margin-bottom: 44px;
 
-    img {
-      height: 204px;
+    span {
+      color: var(--color-green);
     }
   }
 
+  .service-contact {
+    position: absolute;
+    bottom: 20px;
+    right: 0;
+  }
+
+  @media (max-width: 1400px) {
+    .service-contact {
+      left: 60px;
+      bottom: 0;
+    }
+  }
   @media (max-width: 1023px) {
     padding: 37px 40px 40px 40px;
   }
 
   @media (max-width: 767px) {
     padding: 37px 20px 40px 20px;
-
-    .top-message-wrapper {
-      flex-direction: column;
-      p {
-        text-align: center;
-      }
-      img {
-        margin-top: 20px;
-      }
-    }
   }
 
   @media (max-width: 567px) {
-    h4 {
+    .welcome-title {
       font-size: 18px;
       flex-direction: column;
       text-align: center;
-    }
-
-    .top-message-wrapper {
-      margin-top: 20px;
-      margin-bottom: 20px;
     }
   }
 `;
@@ -77,6 +66,9 @@ const StepWrapper = styled.div`
 
     .ant-checkbox-wrapper {
       margin-left: 0px;
+      .p-small {
+        font-size: 16px;
+      }
 
       &:not(:last-child) {
         margin-bottom: 6px;
@@ -84,7 +76,6 @@ const StepWrapper = styled.div`
 
       .ant-checkbox {
         margin-right: 7px;
-
         .ant-checkbox-inner {
           width: 19px;
           height: 19px;
@@ -97,8 +88,8 @@ const StepWrapper = styled.div`
             left: 20%;
             width: 10px;
             height: 22px;
-            border-bottom: 4px solid var(--color-aqua);
-            border-right: 4px solid var(--color-aqua);
+            border-bottom: 4px solid var(--color-dark-green);
+            border-right: 4px solid var(--color-dark-green);
           }
         }
       }
@@ -107,61 +98,44 @@ const StepWrapper = styled.div`
 
   .ant-form {
     .ant-form-item:not(:last-child) {
-      margin-bottom: 60px;
+      margin-bottom: 28px;
     }
 
     .ant-form-item-control {
       line-height: unset;
     }
 
+    .different-module {
+      color: var(--color-blue);
+      font-weight: normal;
+      line-height: 14px;
+      letter-spacing: 0.2px;
+      margin-top: 13px;
+    }
+
     .label-wrapper {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 7px;
-
-      > div {
-        flex: 1;
-      }
-
-      .step-label {
-        display: flex;
-        align-items: baseline;
-
-        h5,
-        p {
-          color: var(--color-aqua);
-        }
-      }
-
-      .step-desc {
-        flex: 1;
-        max-width: 177px;
-        color: var(--color-blue);
-      }
-
-      .description {
-        margin-top: 11px;
-        padding-left: 34px;
-      }
-      .sub-description {
-        font-style: italic;
-        padding-left: 34px;
-        margin-bottom: 16px;
+      margin-bottom: 15px;
+      h5 {
+        color: var(--color-green);
       }
     }
 
     .btn-wrapper {
+      margin-bottom: 19px;
       text-align: right;
       pointer-events: ${props =>
-        !props.stepChksInfo.step4 || props.stepChksInfo.step4.length === 0
+        !props.stepChksInfo.step3 || props.stepChksInfo.step3.length === 0
           ? 'none'
           : 'visible'};
 
       button {
-        width: 128px;
-        background-color: var(--color-aqua);
+        width: 206px;
+        background-color: var(--color-green);
         color: var(--color-white);
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
       }
     }
   }
@@ -190,18 +164,6 @@ const StepWrapper = styled.div`
         : 'visible'};
   }
 
-  .step4 {
-    mix-blend-mode: normal;
-    opacity: ${props =>
-      !props.stepChksInfo.step3 || props.stepChksInfo.step3.length === 0
-        ? '0.4'
-        : '1'};
-    pointer-events: ${props =>
-      !props.stepChksInfo.step3 || props.stepChksInfo.step3.length === 0
-        ? 'none'
-        : 'visible'};
-  }
-
   @media (max-width: 767px) {
     padding: 0 20px;
   }
@@ -217,49 +179,20 @@ const StepWrapper = styled.div`
       .label-wrapper {
         flex-direction: column;
         align-items: flex-start;
-
-        .step-desc {
-          margin-top: 10px;
-        }
-
-        .description,
-        .sub-description {
-          padding-left: 0px;
-        }
-
-        .sub-description {
-          margin-bottom: 0px;
-        }
       }
     }
   }
 `;
 
-const applicationChks = [
+const moduleChks = [
   'Invoice',
   'Match',
   'Precurement',
   'Contract',
   'Document approval'
 ];
-
-const erpChks = [
-  'SAP',
-  'NAV',
-  'Business Central',
-  'D365 Fiance and Operations',
-  'AX 2012',
-  'FX or REST API'
-];
-
-const captureChks = [
-  'SAP',
-  'NAV',
-  'Business Central',
-  'D365 Fiance and Operations',
-  'AX 2012',
-  'FX or REST API'
-];
+const serviceChks = ['Madius Capture', 'Readsoft', 'E-invoice services'];
+const erpChks = ['AX', 'Dynamics 365', 'Iptor', 'M3', 'NAV', 'SAP'];
 
 function WelcomeSetting({ form }) {
   const { getFieldDecorator, setFieldsValue } = form;
@@ -279,8 +212,6 @@ function WelcomeSetting({ form }) {
         handleScrollDown('step2');
       } else if (stepNum === 'step2') {
         handleScrollDown('step3');
-      } else if (stepNum === 'step3') {
-        handleScrollDown('step4');
       }
     }
     if (e.length === 0) {
@@ -288,19 +219,16 @@ function WelcomeSetting({ form }) {
         stepChksInfo.step1 = [];
         stepChksInfo.step2 = [];
         stepChksInfo.step3 = [];
-        stepChksInfo.step4 = [];
         setFieldsValue({ application: [] });
         setFieldsValue({ erpType: [] });
         setFieldsValue({ captureType: [] });
       } else if (stepNum === 'step2') {
         stepChksInfo.step2 = [];
         stepChksInfo.step3 = [];
-        stepChksInfo.step4 = [];
         setFieldsValue({ erpType: [] });
         setFieldsValue({ captureType: [] });
       } else if (stepNum === 'step3') {
         stepChksInfo.step3 = [];
-        stepChksInfo.step4 = [];
         setFieldsValue({ captureType: [] });
       }
       setStepChksInfo(stepChksInfo);
@@ -308,68 +236,47 @@ function WelcomeSetting({ form }) {
   };
 
   return (
-    <MainLayout>
+    <MainLayout paddingBottom={82}>
       <WelcomeSettingWrapper>
-        <h4>
-          Welcome to the onboarding of&nbsp;<p className="p-large">ACME Inc</p>
-        </h4>
-        <div className="top-message-wrapper">
-          <p>
-            This portal will guide you with the MediusFlow XI setup and
-            components like Capture, ERP, User Import and authentication.
-          </p>
-          <img src={welcomeImg} alt="welcome" />
+        <div className="step-wrapper">
+          <img src={leftArrowImg} alt="arrow" />
+          <p className="step-text">Step 2 / 2</p>
         </div>
+        <h4 className="welcome-title">
+          Setting up the onboarding of <span>ACME Inc</span>
+        </h4>
         <StepWrapper stepChksInfo={stepChksInfo}>
           <Form>
             <Form.Item className="step1">
               <div className="label-wrapper" id="step1">
-                <div className="step-label">
-                  <h5>1:st</h5>&nbsp;
-                  <p>is a tenant created?</p>
-                </div>
-                <a className="p-small step-desc" href="/#">
-                  How to request MediusFlow environment?
-                </a>
-              </div>
-              {getFieldDecorator(
-                'tenant',
-                {}
-              )(
-                <Checkbox.Group onChange={e => handleChkChange(e, 'step1')}>
-                  <Checkbox value="tenant">
-                    <span className="p-small">
-                      Yes, there is a tenant created.
-                    </span>
-                  </Checkbox>
-                </Checkbox.Group>
-              )}
-            </Form.Item>
-            <Form.Item className="step2">
-              <div className="label-wrapper" id="step2">
-                <div>
-                  <div className="step-label">
-                    <h5>2:nd</h5>&nbsp;
-                    <p>is a tenant created?</p>
-                  </div>
-                  <p className="p-small description">
-                    Choose what MediusFlow applications that are in scope.{' '}
-                  </p>
-                  <p className="p-xsmall sub-description">
-                    The choosen applications will affect the content of this
-                    onboarding, you can always edit your choices later.
-                  </p>
-                </div>
-                <a className="p-small step-desc" href="/#">
-                  Read about the applications
-                </a>
+                <h5>Which workflow modules will you use?</h5>
               </div>
               {getFieldDecorator(
                 'application',
                 {}
               )(
+                <Checkbox.Group onChange={e => handleChkChange(e, 'step1')}>
+                  {moduleChks.map(item => (
+                    <Checkbox value={item} key={item}>
+                      <span className="p-small">{item}</span>
+                    </Checkbox>
+                  ))}
+                </Checkbox.Group>
+              )}
+              <p className="p-small different-module" href="/#">
+                Read about the different modules
+              </p>
+            </Form.Item>
+            <Form.Item className="step2">
+              <div className="label-wrapper" id="step2">
+                <h5>What service will be used for invoice capture?</h5>
+              </div>
+              {getFieldDecorator(
+                'erpType',
+                {}
+              )(
                 <Checkbox.Group onChange={e => handleChkChange(e, 'step2')}>
-                  {applicationChks.map(item => (
+                  {serviceChks.map(item => (
                     <Checkbox value={item} key={item}>
                       <span className="p-small">{item}</span>
                     </Checkbox>
@@ -379,13 +286,12 @@ function WelcomeSetting({ form }) {
             </Form.Item>
             <Form.Item className="step3">
               <div className="label-wrapper" id="step3">
-                <div className="step-label">
-                  <h5>3:rd</h5>&nbsp;
-                  <p>what ERPs will be integrated?</p>
-                </div>
+                <h5>
+                  What ERP do you want to intergrate (more than one maybe)?
+                </h5>
               </div>
               {getFieldDecorator(
-                'erpType',
+                'captureType',
                 {}
               )(
                 <Checkbox.Group onChange={e => handleChkChange(e, 'step3')}>
@@ -397,33 +303,20 @@ function WelcomeSetting({ form }) {
                 </Checkbox.Group>
               )}
             </Form.Item>
-            <Form.Item className="step4">
-              <div className="label-wrapper" id="step4">
-                <div className="step-label">
-                  <h5>4:th</h5>&nbsp;
-                  <p>what capture system will be used?</p>
-                </div>
-              </div>
-              {getFieldDecorator(
-                'captureType',
-                {}
-              )(
-                <Checkbox.Group onChange={e => handleChkChange(e, 'step4')}>
-                  {captureChks.map(item => (
-                    <Checkbox value={item} key={item}>
-                      <span className="p-small">{item}</span>
-                    </Checkbox>
-                  ))}
-                </Checkbox.Group>
-              )}
-            </Form.Item>
             <div className="btn-wrapper">
               <NavLink to="/main">
-                <Button>Go</Button>
+                <Button>CREATE MY SPACE</Button>
               </NavLink>
             </div>
           </Form>
         </StepWrapper>
+        <div className="service-contact">
+          <ServiceInfo
+            name="Johanna Smith"
+            email="johanna.smith@medius.com"
+            phone="+46 (0) 31 223 213"
+          />
+        </div>
       </WelcomeSettingWrapper>
     </MainLayout>
   );

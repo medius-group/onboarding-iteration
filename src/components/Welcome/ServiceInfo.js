@@ -11,7 +11,7 @@ const ServiceInfoWrapper = styled.div`
     display: flex;
     flex-direction: column;
     width: 293px;
-    background: rgba(242, 242, 242, 0.604977);
+    background: var(--color-bg-grey);
     border-radius: 5px;
     padding-left: 49px;
 

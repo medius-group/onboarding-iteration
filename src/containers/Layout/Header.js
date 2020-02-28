@@ -48,7 +48,7 @@ const HeaderWrapper = styled.div`
       align-items: center;
 
       img {
-        width: 40px;
+        width: 30px;
       }
 
       i {
@@ -74,12 +74,7 @@ const HeaderWrapper = styled.div`
     height: 0;
   }
 
-  @media (max-width: 1023px) {
-    margin: 0px 40px 11px 40px;
-  }
-
   @media (max-width: 767px) {
-    margin: 0px 20px 11px 20px;
     padding: ${props =>
       props.isVisibleSearch ? '16px 8px 60px 8px' : 'padding: 16px 8px;'};
 

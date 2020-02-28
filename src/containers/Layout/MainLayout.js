@@ -14,7 +14,7 @@ const MainLayoutWrapper = styled.div`
       display: flex;
       margin: auto;
       justify-content: center;
-      padding: 0 20px 47px 20px;
+      padding: 0 20px ${props => props.paddingBottom}px 20px;
 
       #content-inner {
         max-width: 1006px;
@@ -34,9 +34,14 @@ const MainLayoutWrapper = styled.div`
   }
 `;
 
-function MainLayout({ children, isShowNavbar, isVisibleSearch }) {
+function MainLayout({
+  children,
+  isShowNavbar,
+  isVisibleSearch,
+  paddingBottom
+}) {
   return (
-    <MainLayoutWrapper>
+    <MainLayoutWrapper paddingBottom={paddingBottom}>
       <div id="content-outer">
         <Header
           title="Onboarding - ACME Inc"
@@ -57,13 +62,15 @@ MainLayout.propTypes = {
     PropTypes.node
   ]),
   isShowNavbar: PropTypes.bool,
-  isVisibleSearch: PropTypes.bool
+  isVisibleSearch: PropTypes.bool,
+  paddingBottom: PropTypes.number
 };
 
 MainLayout.defaultProps = {
   children: null,
   isShowNavbar: false,
-  isVisibleSearch: false
+  isVisibleSearch: false,
+  paddingBottom: 47
 };
 
 export default withTheme(MainLayout);

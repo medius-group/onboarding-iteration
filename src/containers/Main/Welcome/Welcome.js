@@ -1,5 +1,9 @@
+/* eslint-disable no-useless-escape */
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { compose } from 'recompose';
+import { withRouter } from 'react-router-dom';
 import { Input, Button, Icon } from 'antd';
 import MainLayout from 'containers/Layout/MainLayout';
 import ServiceInfo from 'components/Welcome/ServiceInfo';
@@ -27,7 +31,7 @@ const WelcomeWrapper = styled.div`
     margin-bottom: 84px;
 
     p {
-      min-width: 400px;
+      max-width: 400px;
       font-size: 18px;
       margin-right: 76px;
       text-align: center;
@@ -104,6 +108,7 @@ const WelcomeWrapper = styled.div`
 
   .welcome-footer {
     display: flex;
+    align-items: center;
     justify-content: space-between;
     padding: 0 57px;
     margin-bottom: 43px;
@@ -135,11 +140,61 @@ const WelcomeWrapper = styled.div`
       }
     }
   }
+
+  @media (max-width: 1023px) {
+    .introduce-wrapper {
+      flex-direction: column;
+      padding: 0 63px;
+      p {
+        margin-right: 0px;
+      }
+      img {
+        margin-top: 20px;
+      }
+    }
+    .welcome-footer {
+      flex-direction: column;
+      .change-email {
+        margin-bottom: 60px;
+      }
+    }
+  }
+
+  @media (max-width: 698px) {
+    .introduce-wrapper {
+      padding: 0 10px;
+      p {
+        width: 100%;
+      }
+      img {
+        width: 300px;
+      }
+    }
+    .name-space-wrapper {
+      .name-space-input {
+        flex-direction: column;
+        .name-space {
+          input {
+            width: 100px;
+          }
+        }
+        .ant-btn {
+          margin-top: 20px;
+        }
+      }
+    }
+    .welcome-footer {
+      padding: 0 10px;
+      .change-email {
+        width: 100%;
+      }
+    }
+  }
 `;
 
-function Welcome() {
+function Welcome({ history }) {
   const [isHavingSpace, setIsHavingSpace] = useState(false);
-  const [spaceName, setSpaceName] = useState(false);
+  const [spaceName, setSpaceName] = useState('');
   const [isSpecialChar, setIsSpecialChar] = useState(false);
 
   const handleSpaceName = e => {
@@ -152,7 +207,11 @@ function Welcome() {
     }
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    if (!isSpecialChar && spaceName.trim().length !== 0) {
+      history.push('/setting');
+    }
+  };
 
   return (
     <MainLayout>
@@ -227,4 +286,12 @@ function Welcome() {
   );
 }
 
-export default Welcome;
+Welcome.propTypes = {
+  history: PropTypes.object
+};
+
+Welcome.defaultProps = {
+  history: {}
+};
+
+export default compose(withRouter)(Welcome);
