@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'recompose';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
-import { Form, Checkbox } from 'antd';
+import { NavLink, withRouter } from 'react-router-dom';
+import { Form, Checkbox, Select, Icon } from 'antd';
 import MainLayout from 'containers/Layout/MainLayout';
 import Button from '@material-ui/core/Button';
 import ServiceInfo from 'components/Welcome/ServiceInfo';
 import leftArrowImg from 'assets/img/left_arrow.svg';
+
+const { Option } = Select;
 
 const WelcomeSettingWrapper = styled.div`
   padding: 8px 10px;
@@ -150,6 +152,14 @@ const StepWrapper = styled.div`
       !props.stepChksInfo.step1 || props.stepChksInfo.step1.length === 0
         ? 'none'
         : 'visible'};
+
+    .check-wrapper {
+      display: flex;
+      flex-direction: column;
+      .select-wrapper {
+        padding-left: 35px;
+      }
+    }
   }
 
   .step3 {
@@ -191,6 +201,7 @@ const moduleChks = [
   'Contract',
   'Document approval'
 ];
+
 const serviceChks = ['Madius Capture', 'Readsoft', 'E-invoice services'];
 const erpChks = ['AX', 'Dynamics 365', 'Iptor', 'M3', 'NAV', 'SAP'];
 
@@ -221,18 +232,23 @@ function WelcomeSetting({ form }) {
         stepChksInfo.step3 = [];
         setFieldsValue({ application: [] });
         setFieldsValue({ erpType: [] });
-        setFieldsValue({ captureType: [] });
+        setFieldsValue({ service: [] });
       } else if (stepNum === 'step2') {
         stepChksInfo.step2 = [];
         stepChksInfo.step3 = [];
         setFieldsValue({ erpType: [] });
-        setFieldsValue({ captureType: [] });
+        setFieldsValue({ service: [] });
       } else if (stepNum === 'step3') {
         stepChksInfo.step3 = [];
-        setFieldsValue({ captureType: [] });
+        setFieldsValue({ erpType: [] });
       }
       setStepChksInfo(stepChksInfo);
     }
+  };
+  console.log('stepChksInfo', stepChksInfo);
+
+  const handleChange = value => {
+    console.log(`selected ${value}`);
   };
 
   return (
@@ -272,14 +288,32 @@ function WelcomeSetting({ form }) {
                 <h5>What service will be used for invoice capture?</h5>
               </div>
               {getFieldDecorator(
-                'erpType',
+                'service',
                 {}
               )(
                 <Checkbox.Group onChange={e => handleChkChange(e, 'step2')}>
                   {serviceChks.map(item => (
-                    <Checkbox value={item} key={item}>
-                      <span className="p-small">{item}</span>
-                    </Checkbox>
+                    <div className="check-wrapper" key={item}>
+                      <Checkbox value={item}>
+                        <span className="p-small">{item}</span>
+                      </Checkbox>
+                      {stepChksInfo.step2 &&
+                        stepChksInfo.step2.indexOf(item) > -1 && (
+                          <div className="select-wrapper">
+                            <Select
+                              defaultValue="invoice"
+                              style={{ width: 120 }}
+                              suffixIcon={
+                                <Icon theme="filled" type="caret-down" />
+                              }
+                              onChange={handleChange}
+                            >
+                              <Option value="invoice">Invoice</Option>
+                              <Option value="contract">Contract</Option>
+                            </Select>
+                          </div>
+                        )}
+                    </div>
                   ))}
                 </Checkbox.Group>
               )}
@@ -291,7 +325,7 @@ function WelcomeSetting({ form }) {
                 </h5>
               </div>
               {getFieldDecorator(
-                'captureType',
+                'erp',
                 {}
               )(
                 <Checkbox.Group onChange={e => handleChkChange(e, 'step3')}>
@@ -304,7 +338,7 @@ function WelcomeSetting({ form }) {
               )}
             </Form.Item>
             <div className="btn-wrapper">
-              <NavLink to="/main">
+              <NavLink to="/finish">
                 <Button>CREATE MY SPACE</Button>
               </NavLink>
             </div>
@@ -323,11 +357,16 @@ function WelcomeSetting({ form }) {
 }
 
 WelcomeSetting.propTypes = {
+  history: PropTypes.object,
   form: PropTypes.object
 };
 
 WelcomeSetting.defaultProps = {
+  history: {},
   form: {}
 };
 
-export default compose(Form.create({ name: 'steps_form' }))(WelcomeSetting);
+export default compose(
+  withRouter,
+  Form.create({ name: 'steps_form' })
+)(WelcomeSetting);
