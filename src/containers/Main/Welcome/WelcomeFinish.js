@@ -84,6 +84,7 @@ const WelcomeFinishWrapper = styled.div`
           display: flex;
           align-items: flex-start;
           flex: 1;
+          padding-right: 5px;
           input {
             width: 100%;
             height: 28px;
@@ -130,6 +131,9 @@ const WelcomeFinishWrapper = styled.div`
         }
 
         .user-action-wrapper {
+          height: 28px;
+          display: flex;
+          align-items: center;
           justify-content: space-between;
           .ant-switch {
             width: 36px;
