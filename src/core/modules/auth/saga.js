@@ -1,10 +1,19 @@
 /* eslint-disable no-unused-vars */
 import { put, call, fork, all, take } from 'redux-saga/effects';
 import {
-  authActionCreators,
-  POST_LOGIN_REQUEST
+  SET_INITIAL_VALUE,
+  POST_LOGIN_REQUEST,
+  authActionCreators
 } from 'core/modules/auth/actions';
 import { restService } from 'utilities';
+
+export function* asyncSetInitialValueRequest({ payload, resolve, reject }) {
+  try {
+    yield put(authActionCreators.setInitialValueSuccess({ ...payload }));
+  } catch (e) {
+    reject(e);
+  }
+}
 
 export function* asyncPostLoginRequest({ payload, resolve, reject }) {
   const { email, password } = payload;
@@ -16,15 +25,20 @@ export function* asyncPostLoginRequest({ payload, resolve, reject }) {
       third_party: false
     });
     if (!response.status === 200) {
-      yield put(
-        authActionCreators.loginSuccess({user: response.data})
-      );
+      yield put(authActionCreators.loginSuccess({ user: response.data }));
       resolve(response);
     } else {
       reject(response);
     }
   } catch (e) {
     reject(e);
+  }
+}
+
+export function* watchSetInitialValueRequest() {
+  while (true) {
+    const action = yield take(SET_INITIAL_VALUE);
+    yield* asyncSetInitialValueRequest(action);
   }
 }
 
@@ -36,5 +50,5 @@ export function* watchPostLoginRequest() {
 }
 
 export default function*() {
-  yield all([fork(watchPostLoginRequest)]);
+  yield all([fork(watchSetInitialValueRequest), fork(watchPostLoginRequest)]);
 }

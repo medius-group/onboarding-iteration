@@ -32,6 +32,13 @@ const MainLayoutWrapper = styled.div`
       }
     }
   }
+  @media (max-width: 568px) {
+    #content-outer {
+      .main-wrapper {
+        padding: 0;
+      }
+    }
+  }
 `;
 
 function MainLayout({

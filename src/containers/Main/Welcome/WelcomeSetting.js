@@ -60,7 +60,7 @@ const WelcomeSettingWrapper = styled.div`
 `;
 
 const StepWrapper = styled.div`
-  padding: 0 62px;
+  padding: 0 235px;
 
   .ant-checkbox-group {
     display: flex;

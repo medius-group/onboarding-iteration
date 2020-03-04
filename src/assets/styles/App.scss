@@ -22,3 +22,15 @@
         background: #555; 
     }
 }
+
+.ant-tooltip {
+    .ant-tooltip-arrow {
+        display: none;
+    }
+    .ant-tooltip-inner {
+        min-height: unset;
+        background: rgba(0, 0, 0, 0.703459);
+        font-size: 12px;
+        padding: 3px 9px;
+    }
+}
