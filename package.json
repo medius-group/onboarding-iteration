@@ -13,6 +13,7 @@
     "npm": "^6.10.3",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
+    "react-collapse": "^5.0.1",
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.12.10",
     "react-intl": "^2.9.0",

@@ -6,9 +6,9 @@ import WelcomeBack from 'containers/Main/WelcomeBack/WelcomeBack';
 class Main extends PureComponent {
   render() {
     return (
-      <MainLayout isShowNavbar isVisibleSearch>
+      <MainLayout isShowNavbar isMenu>
         <Switch>
-          <Route exact path="/main" component={WelcomeBack} />
+          <Route exact path="/welcomeback" component={WelcomeBack} />
         </Switch>
       </MainLayout>
     );

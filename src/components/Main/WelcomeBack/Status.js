@@ -20,7 +20,7 @@ const StatusWrapper = styled.div`
       position: absolute;
       left: -15px;
       top: -27px;
-      font-weight: 500;
+      font-weight: 600;
       font-size: 44px;
       line-height: 54px;
       color: rgba(0, 0, 0, 0.871777);
@@ -31,13 +31,16 @@ const StatusWrapper = styled.div`
     }
 
     .not-started {
-      color: var(--color-gray);
+      color: rgba(0, 0, 0, 0.644613);
+      font-weight: 600;
     }
     .in-progress {
-      color: var(--color-yellow);
+      color: #005fdc;
+      font-weight: 600;
     }
     .done {
-      color: var(--color-green);
+      color: #2fa461;
+      font-weight: 600;
     }
 
     .next-step-wrapper {
@@ -46,14 +49,16 @@ const StatusWrapper = styled.div`
       align-items: center;
 
       .p-xsmall {
-        font-weight: 500;
+        font-weight: 600;
+        font-size: 10px;
+        color: rgba(0, 0, 0, 0.871804);
       }
 
       .next-step {
         font-family: Montserrat;
         font-weight: normal;
-        font-size: 8px;
-        line-height: 10px;
+        font-size: 12px;
+        line-height: 16px;
         text-decoration-line: underline;
         color: var(--color-blue);
         cursor: pointer;

@@ -12,7 +12,7 @@ class RoutesContainer extends PureComponent {
         <Route exact path="/" component={Welcome} />
         <Route exact path="/setting" component={WelcomeSetting} />
         <Route exact path="/finish" component={WelcomeFinish} />
-        <Route exact path="/main" component={Main} />
+        <Route exact path="/welcomeback" component={Main} />
       </Switch>
     );
   }

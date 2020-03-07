@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Icon, Input } from 'antd';
+import { Tooltip } from 'antd';
 import Navbar from 'containers/Layout/Navbar';
 import logoImg from 'assets/img/logo.svg';
-import avatarImg from 'assets/img/avatar.svg';
+import opennewImg from 'assets/img/open-in-new.svg';
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -24,42 +24,20 @@ const HeaderWrapper = styled.div`
     }
   }
 
-  .avatar-wrapper {
+  .menu-wrapper {
     display: flex;
     align-items: center;
-
-    input {
-      width: 230px;
-      height: 32px;
-      background: var(--color-bg-input);
-      border: 1px solid var(--color-border-main);
-      box-sizing: border-box;
-      border-radius: 3px;
-      font-style: italic;
-      font-weight: normal;
-      font-size: 12px;
-      line-height: 15px;
-      color: var(--color-text-secondary);
-      margin-right: 20px;
+    p {
+      font-size: 16px;
+      color: var(--color-blue);
+      cursor: pointer;
     }
-
-    .user-setting {
+    .qa-environment {
       display: flex;
       align-items: center;
-
+      margin-right: 50px;
       img {
-        width: 30px;
-      }
-
-      i {
-        color: var(--color-black-7);
-        margin-left: 5px;
-        cursor: pointer;
-      }
-
-      .menu-icon {
-        font-size: 24px;
-        display: none;
+        margin-left: 11px;
       }
     }
   }
@@ -76,7 +54,7 @@ const HeaderWrapper = styled.div`
 
   @media (max-width: 767px) {
     padding: ${props =>
-      props.isVisibleSearch ? '16px 8px 60px 8px' : 'padding: 16px 8px;'};
+      props.isMenu ? '16px 8px 60px 8px' : 'padding: 16px 8px;'};
 
     .avatar-wrapper {
       input {
@@ -116,32 +94,34 @@ const HeaderWrapper = styled.div`
   }
 `;
 
-function Header({ title, isVisibleSearch }) {
+function Header({ title, isMenu }) {
   const [isMenuCollapsed, setIsMenuCollapsed] = useState(true);
+  const AdminTooltip = () => {
+    return (
+      <div className="admin-tooltip-wrapper">
+        <p>Project Members</p>
+        <p>Change Scope of Onboarding</p>
+      </div>
+    );
+  };
 
   return (
-    <HeaderWrapper
-      isVisibleSearch={isVisibleSearch}
-      isMenuCollapsed={isMenuCollapsed}
-    >
+    <HeaderWrapper isMenu={isMenu} isMenuCollapsed={isMenuCollapsed}>
       <div className="logo-wrapper">
         <img src={logoImg} alt="logo" />
         <p>{title}</p>
       </div>
-      <div className="avatar-wrapper">
-        {isVisibleSearch && <Input placeholder="Search" />}
-        <div className="user-setting">
-          <img src={avatarImg} alt="logo" />
-          <Icon type="caret-down" />
-          {isVisibleSearch && (
-            <Icon
-              className="menu-icon"
-              type={isMenuCollapsed ? 'menu-fold' : 'menu-unfold'}
-              onClick={() => setIsMenuCollapsed(!isMenuCollapsed)}
-            />
-          )}
+      {isMenu && (
+        <div className="menu-wrapper">
+          <div className="qa-environment">
+            <p>QA environment</p>
+            <img src={opennewImg} alt="open new" />
+          </div>
+          <Tooltip id="admin-tooltip" placement="bottomRight" title={AdminTooltip} trigger="click">
+            <p>Admin</p>
+          </Tooltip>
         </div>
-      </div>
+      )}
       <div className="mobile-menu">
         <Navbar className="mobile-nav-bar" />
       </div>
@@ -151,12 +131,12 @@ function Header({ title, isVisibleSearch }) {
 
 Header.propTypes = {
   title: PropTypes.string,
-  isVisibleSearch: PropTypes.bool
+  isMenu: PropTypes.bool
 };
 
 Header.defaultProps = {
   title: '',
-  isVisibleSearch: false
+  isMenu: false
 };
 
 export default Header;

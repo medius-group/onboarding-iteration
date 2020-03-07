@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import closeImg from 'assets/img/close.svg';
 
@@ -57,7 +58,10 @@ function SpaceAlert({ onClose, ...props }) {
       <h4>Your space is created!</h4>
       <p>
         <span className="acme">The Acme</span> space is done and you can access
-        the <span className="assurance">Quality Assurance instance here</span>
+        the{' '}
+        <NavLink className="assurance" to="/welcomeback">
+          Quality Assurance instance here
+        </NavLink>
       </p>
     </SpaceAlertWrapper>
   );

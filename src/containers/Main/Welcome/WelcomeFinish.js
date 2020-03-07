@@ -308,7 +308,11 @@ function WelcomeFinish({ customers, setInitialValue }) {
               <div className="table-row" key={index}>
                 <div className="td-body name">
                   {person.isPrimary && (
-                    <Tooltip placement="top" title="Primary Contact">
+                    <Tooltip
+                      placement="top"
+                      title="Primary Contact"
+                      id="primary-contact"
+                    >
                       <img src={primaryAllowImg} alt="card" />
                     </Tooltip>
                   )}

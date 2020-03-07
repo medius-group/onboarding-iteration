@@ -8,7 +8,7 @@ const MainLayoutWrapper = styled.div`
   #content-outer {
     position: relative;
     min-height: 100vh;
-    background-color: var(--color-bg-main);
+    background-color: rgba(242, 242, 242, 0.604977);
 
     .main-wrapper {
       display: flex;
@@ -41,19 +41,11 @@ const MainLayoutWrapper = styled.div`
   }
 `;
 
-function MainLayout({
-  children,
-  isShowNavbar,
-  isVisibleSearch,
-  paddingBottom
-}) {
+function MainLayout({ children, isShowNavbar, isMenu, paddingBottom }) {
   return (
     <MainLayoutWrapper paddingBottom={paddingBottom}>
       <div id="content-outer">
-        <Header
-          title="Onboarding - ACME Inc"
-          isVisibleSearch={isVisibleSearch}
-        />
+        <Header title="Onboarding of ACME Inc" isMenu={isMenu} />
         <div className="main-wrapper">
           {isShowNavbar && <Navbar className="desktop-nav-bar" />}
           <div id="content-inner">{children}</div>
@@ -69,14 +61,14 @@ MainLayout.propTypes = {
     PropTypes.node
   ]),
   isShowNavbar: PropTypes.bool,
-  isVisibleSearch: PropTypes.bool,
+  isMenu: PropTypes.bool,
   paddingBottom: PropTypes.number
 };
 
 MainLayout.defaultProps = {
   children: null,
   isShowNavbar: false,
-  isVisibleSearch: false,
+  isMenu: false,
   paddingBottom: 47
 };
 

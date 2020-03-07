@@ -24,13 +24,36 @@
 }
 
 .ant-tooltip {
-    .ant-tooltip-arrow {
-        display: none;
-    }
-    .ant-tooltip-inner {
+    // .ant-tooltip-arrow {
+    //     display: none;
+    // }
+    #primary-contact {
         min-height: unset;
         background: rgba(0, 0, 0, 0.703459);
         font-size: 12px;
         padding: 3px 9px;
     }
+    #admin-tooltip {
+        background: var(--color-white);
+        padding: 15px;
+        p {
+            font-size: 16px;
+            color: var(--color-blue);
+            cursor: pointer;
+            &:first-child {
+                margin-bottom: 30px;
+            }
+        }
+    }
+}
+.ant-tooltip-placement-bottomRight {
+    .ant-tooltip-arrow {
+        &::before {
+            background-color: var(--color-white);
+        }
+    }
+}
+
+.ReactCollapse--collapse {
+    transition: height 500ms;
 }
