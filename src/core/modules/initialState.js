@@ -1,5 +1,6 @@
 const auth = {
   persons: [],
+  links: [],
   user: {}
 };
 

@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { compose } from 'recompose';
+import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
-import { Badge, Icon } from 'antd';
+import { Badge, Icon, Popover, Button } from 'antd';
 import { Collapse } from 'react-collapse';
+import { connectAuth, authActionCreators } from 'core';
+import { promisify } from 'utilities';
 import editImg from 'assets/img/edit.svg';
+import deleteImg from 'assets/img/delete.svg';
+import closeImg from 'assets/img/close.svg';
 
 const NavbarWrapper = styled.div`
   padding: 21px 38px 0px 0px;
@@ -81,36 +87,31 @@ const NavbarWrapper = styled.div`
     }
   }
 
-  .change-setup {
-    display: flex;
-    align-items: center;
-    margin-top: 39px;
-
-    img {
-      margin-right: 29px;
-    }
-
-    a {
-      font-style: italic;
-      color: var(--color-blue);
-    }
-  }
-
   .additional-links {
     margin-top: 75px;
     display: flex;
     flex-direction: column;
-
-    a {
-      font-weight: normal;
-      color: var(--color-blue);
-      line-height: 18px;
+    .link-wrapper {
+      display: flex;
+      align-items: center;
+      p {
+        font-weight: 600;
+        margin-right: 27px;
+      }
+      img {
+        cursor: pointer;
+      }
     }
+  }
 
-    .add-link {
-      font-weight: normal;
-      opacity: 0.71;
-      cursor: pointer;
+  .links-list {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    a {
+      line-height: 18px;
+      color: var(--color-blue);
+      font-size: 12px;
     }
   }
 `;
@@ -164,8 +165,14 @@ const navItems = [
   }
 ];
 
-function Navbar({ ...props }) {
+function Navbar({ links, setInitialValue, ...props }) {
   const [routes, setRoutes] = useState(navItems);
+  const [ownLinks, setOwnLinks] = useState(links);
+  const [isVisibleLink, setIsVisibleLink] = useState(false);
+  const [field, setFieldtype] = useState('title');
+  const [currentIndex, setCurrentIndex] = useState(0);
+  let titleRefs = [], urlRefs = [];
+
   const handleMenuItem = selectedIndex => {
     const tempRoutes = routes.map((item, index) => {
       if (index === selectedIndex) {
@@ -190,6 +197,7 @@ function Navbar({ ...props }) {
             } else {
               routes[selectedIndex].childs[cIndex].selected = false;
             }
+            return childItem;
           });
         }
       }
@@ -197,6 +205,97 @@ function Navbar({ ...props }) {
     });
     setRoutes([...tempRoutes]);
   };
+
+  useEffect(() => {
+    if (titleRefs[currentIndex] && field === 'title') {
+      titleRefs[currentIndex].focus();
+    }
+    if (urlRefs[currentIndex] && field === 'url') {
+      urlRefs[currentIndex].focus();
+    }
+  }, [ownLinks, field, currentIndex, titleRefs, urlRefs]);
+
+  const handleChangeInput = (e, index, fieldType) => {
+    ownLinks[index][fieldType] = e.target.value;
+    setFieldtype(fieldType);
+    setCurrentIndex(index);
+    setOwnLinks([...ownLinks]);
+  };
+
+  const handleDeleteLink = index => {
+    setOwnLinks([...ownLinks.filter((item, i) => i !== index)]);
+    promisify(setInitialValue, {
+      links: [...ownLinks.filter((item, i) => i !== index)]
+    });
+  };
+
+  const handleAddLink = () => {
+    setOwnLinks([
+      ...ownLinks,
+      {
+        title: '',
+        url: ''
+      }
+    ]);
+  };
+
+  const handleSaveLinks = () => {
+    promisify(setInitialValue, {
+      links: [...ownLinks]
+    });
+  };
+
+  const OwnLinks = () => (
+    <div className="own-links-wrapper">
+      <img
+        className="link-modal-close"
+        src={closeImg}
+        alt="close"
+        onClick={() => setIsVisibleLink(false)}
+      />
+      <p className="title">Acme’s own link library</p>
+      <div className="link-list-wrapper">
+        <div className="table-header">
+          <div className="header th-title">
+            <p className="p-small">Title</p>
+          </div>
+          <div className="header th-url">
+            <p className="p-small">URL</p>
+          </div>
+        </div>
+        <div className="table-body">
+          {ownLinks.map((link, index) => (
+            <div className="table-body-wrapper" key={`${index}`}>
+              <div className="table-item table-title">
+                <input
+                  ref={ref => titleRefs[index] = ref}
+                  value={link.title}
+                  onChange={e => handleChangeInput(e, index, 'title')}
+                />
+              </div>
+              <div className="table-item table-url">
+                <input
+                  ref={ref => urlRefs[index] = ref}
+                  value={link.url}
+                  onChange={e => handleChangeInput(e, index, 'url')}
+                />
+                <img
+                  className="delete-btn"
+                  src={deleteImg}
+                  alt="delete"
+                  onClick={() => handleDeleteLink(index)}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="link-control-wrapper">
+        <p onClick={handleAddLink}>ADD LINK</p>
+        <Button onClick={handleSaveLinks}>SAVE</Button>
+      </div>
+    </div>
+  );
 
   return (
     <NavbarWrapper {...props}>
@@ -217,7 +316,7 @@ function Navbar({ ...props }) {
         }
 
         return (
-          <div className="nav-item">
+          <div className="nav-item" key={item.name}>
             <div className="menu-item" onClick={() => handleMenuItem(index)}>
               <p className="p-medium">{item.name}</p>
               <div>
@@ -278,26 +377,56 @@ function Navbar({ ...props }) {
           </div>
         );
       })}
-      <div className="change-setup">
-        <img src={editImg} alt="edit icon" />
-        <a className="p-small" href="/#">
-          Change setup
-        </a>
-      </div>
       <div className="additional-links">
-        <a className="p-small" href="/#">
-          A link to a document
-        </a>
-        <a className="p-small" href="/#">
-          Another link
-        </a>
-        <a className="p-small" href="/#">
-          And a third
-        </a>
-        <p className="p-small add-link">+ Add link</p>
+        <div className="link-wrapper">
+          <p className="p-small">Acme’s own link library</p>
+          <Popover
+            id="own-links-popover"
+            visible={isVisibleLink}
+            placement="topLeft"
+            content={<OwnLinks />}
+            onVisibleChange={visible => setIsVisibleLink(visible)}
+            trigger="click"
+          >
+            <img onClick={() => setIsVisibleLink(true)}src={editImg} alt="edit icon" />
+          </Popover>
+        </div>
+      </div>
+      <div className="links-list">
+        {links.map(link => (
+          <a href={link.url} key={link.url}>
+            {link.title}
+          </a>
+        ))}
       </div>
     </NavbarWrapper>
   );
 }
 
-export default Navbar;
+Navbar.propTypes = {
+  links: PropTypes.array,
+  setInitialValue: PropTypes.func.isRequired
+};
+
+Navbar.defaultProps = {
+  links: []
+};
+
+const mapStateToProps = ({ auth }) => ({
+  links: auth.links
+});
+
+const mapDispatchToProps = dispatch => {
+  const { setInitialValue } = authActionCreators;
+
+  return bindActionCreators(
+    {
+      setInitialValue
+    },
+    dispatch
+  );
+};
+
+export default compose(connectAuth(mapStateToProps, mapDispatchToProps))(
+  Navbar
+);
