@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { Tooltip } from 'antd';
 import Navbar from 'containers/Layout/Navbar';
@@ -17,6 +18,7 @@ const HeaderWrapper = styled.div`
   .logo-wrapper {
     display: flex;
     align-items: center;
+    cursor: pointer;
 
     img {
       height: 28px;
@@ -107,17 +109,23 @@ function Header({ title, isMenu }) {
 
   return (
     <HeaderWrapper isMenu={isMenu} isMenuCollapsed={isMenuCollapsed}>
-      <div className="logo-wrapper">
-        <img src={logoImg} alt="logo" />
-        <p>{title}</p>
-      </div>
+      <NavLink to="/welcomeback">
+        <div className="logo-wrapper">
+          <img src={logoImg} alt="logo" />
+          <p>{title}</p>
+        </div>
+      </NavLink>
       {isMenu && (
         <div className="menu-wrapper">
           <div className="qa-environment">
             <p>QA environment</p>
             <img src={opennewImg} alt="open new" />
           </div>
-          <Tooltip id="admin-tooltip" placement="bottomRight" title={AdminTooltip} trigger="click">
+          <Tooltip
+            id="admin-tooltip"
+            placement="bottomRight"
+            title={AdminTooltip}
+          >
             <p>Admin</p>
           </Tooltip>
         </div>

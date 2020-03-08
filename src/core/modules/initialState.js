@@ -1,7 +1,8 @@
 const auth = {
   persons: [],
   links: [],
-  user: {}
+  user: {},
+  completedRoutes: []
 };
 
 export const initialState = {

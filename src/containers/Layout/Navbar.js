@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { compose } from 'recompose';
 import { bindActionCreators } from 'redux';
@@ -71,12 +72,25 @@ const NavbarWrapper = styled.div`
           .sub-child-menu-item {
             border-left: 3px solid var(--color-bg-grey);
             padding-left: 4px;
+            .name {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              .completed-icon {
+                color: var(--color-green);
+              }
+            }
             .title {
               font-style: italic;
               color: var(--color-dark-gray);
             }
             &:hover {
               border-left: 3px solid var(--color-grey-border);
+            }
+          }
+          .active-nav {
+            .sub-child-menu-item {
+              border-left: 3px solid var(--color-green);
             }
           }
         }
@@ -128,9 +142,9 @@ const navItems = [
         status: 0,
         total: 3,
         childs: [
-          { name: 'COMPANY STRUCTURE', title: 'STEP 1 IN SETUP' },
-          { name: 'POSTING AND FINANCE', title: 'STEP 2 IN SETUP' },
-          { name: 'BUSSINESS RULES', title: 'STEP 3 IN SETUP' }
+          { name: 'COMPANY STRUCTURE', title: 'STEP 1 IN SETUP', href: '/workflow/company' },
+          { name: 'POSTING AND FINANCE', title: 'STEP 2 IN SETUP', href: '/workflow/finance' },
+          { name: 'BUSSINESS RULES', title: 'STEP 3 IN SETUP', href: '/workflow/bussiness' }
         ]
       },
       { name: 'OTHER SETTINGS', status: 0, total: 2 }
@@ -160,12 +174,20 @@ const navItems = [
         ]
       },
       { name: 'AX SETUP', status: 0, total: 2 },
-      { name: 'NAV SETUP', status: 0, total: 2 }
+      {
+        name: 'NAV SETUP',
+        status: 0,
+        total: 2,
+        childs: [
+          { name: 'Install NAV integration', title: 'NOT STARTED' },
+          { name: 'Fix settings for NAV', title: 'NOT STARTED' }
+        ]
+      }
     ]
   }
 ];
 
-function Navbar({ links, setInitialValue, ...props }) {
+function Navbar({ links, completedRoutes, setInitialValue, ...props }) {
   const [routes, setRoutes] = useState(navItems);
   const [ownLinks, setOwnLinks] = useState(links);
   const [isVisibleLink, setIsVisibleLink] = useState(false);
@@ -243,6 +265,10 @@ function Navbar({ links, setInitialValue, ...props }) {
     promisify(setInitialValue, {
       links: [...ownLinks]
     });
+  };
+
+  const isCompleted = pathname => {
+    return completedRoutes.findIndex(route => (route.completed && route.pathname === pathname )) !== -1;
   };
 
   const OwnLinks = () => (
@@ -359,12 +385,17 @@ function Navbar({ links, setInitialValue, ...props }) {
                                   className="sub-child-item"
                                   key={subChildItem.name}
                                 >
-                                  <div className="sub-child-menu-item">
-                                    <p className="name">{subChildItem.name}</p>
-                                    <p className="title p-small">
-                                      {subChildItem.title}
-                                    </p>
-                                  </div>
+                                  <NavLink to={subChildItem.href || '/#'} activeClassName="active-nav">
+                                    <div className="sub-child-menu-item">
+                                      <p className="name">
+                                        {subChildItem.name}
+                                        {<Icon type="check-circle" className={`${isCompleted(subChildItem.href) ? 'completed-icon' : ''}`} /> }
+                                      </p>
+                                      <p className="title p-small">
+                                        {subChildItem.title}
+                                      </p>
+                                    </div>
+                                  </NavLink>
                                 </div>
                               ))}
                           </Collapse>
@@ -394,7 +425,12 @@ function Navbar({ links, setInitialValue, ...props }) {
       </div>
       <div className="links-list">
         {links.map(link => (
-          <a href={link.url} key={link.url}>
+          <a
+            href={link.url}
+            key={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {link.title}
           </a>
         ))}
@@ -405,15 +441,18 @@ function Navbar({ links, setInitialValue, ...props }) {
 
 Navbar.propTypes = {
   links: PropTypes.array,
+  completedRoutes: PropTypes.array,
   setInitialValue: PropTypes.func.isRequired
 };
 
 Navbar.defaultProps = {
-  links: []
+  links: [],
+  completedRoutes: []
 };
 
 const mapStateToProps = ({ auth }) => ({
-  links: auth.links
+  links: auth.links,
+  completedRoutes: auth.completedRoutes
 });
 
 const mapDispatchToProps = dispatch => {
